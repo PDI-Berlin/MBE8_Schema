@@ -1,0 +1,818 @@
+# The modules here are used for importing EPIC log files to a DataFrame and optionally export it as an *.xlsx file.
+# Copyright (C) 2024  Altug Yildirim
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+definitions:
+  name: 'MBE ELN'
+  sections:
+    Holder:
+      base_sections:
+        - 'nomad.datamodel.data.EntryData'
+      description: |
+        MBE ELN Holder Section
+      quantities:
+        date_time:
+          type: Datetime
+          m_annotations:
+            eln:
+              component: DateTimeEditQuantity
+        grower:
+          type: User
+          m_annotations:
+            eln:
+              component: AuthorEditQuantity
+        Holder ID:
+          type: string
+          m_annotations:
+            eln:
+              component: StringEditQuantity
+        substrate ID:
+          type: string
+          m_annotations:
+            eln:
+              component: StringEditQuantity
+        Holder shape:
+          type:
+            type_kind: Enum
+            type_data:
+              - '5'
+              - '10'
+              - '4'
+              - '2'
+          description:
+          m_annotations:
+            eln:
+              component: EnumEditQuantity
+        Holder filled position:
+          type:
+            type_kind: Enum
+            type_data:
+              - A
+              - B
+              - C
+              - D
+              - E
+          description:
+          m_annotations:
+            eln:
+              component: EnumEditQuantity
+        EPIC angle:
+          type: np.float64
+          unit: deg
+          m_annotations:
+            eln:
+              component: NumberEditQuantity
+    Substrate for Growth:
+      base_sections:
+        - 'nomad.datamodel.data.EntryData'
+      description: |
+        MBE ELN Substrate for Growth Section
+      quantities:
+        date_time:
+          type: Datetime
+          m_annotations:
+            eln:
+              component: DateTimeEditQuantity
+        grower:
+          type: User
+          m_annotations:
+            eln:
+              component: AuthorEditQuantity
+        Charge ID:
+          type: string
+          m_annotations:
+            eln:
+              component: StringEditQuantity
+        Parent ID:
+          type: string
+          m_annotations:
+            eln:
+              component: StringEditQuantity
+        Serial Number:
+          type: int
+          m_annotations:
+            eln:
+              component: NumberEditQuantity
+        Substrate ID:
+          type: string
+          m_annotations:
+            eln:
+              component: StringEditQuantity
+        alias(es):
+          type: string
+          m_annotations:
+            eln:
+              component: StringEditQuantity
+        Grown on?:
+          type: bool
+          m_annotations:
+            eln:
+              component: BoolEditQuantity
+        Surface Pretreatment ID:
+          type: string
+          m_annotations:
+            eln:
+              component: StringEditQuantity
+        Backside coating ID:
+          type: string
+          m_annotations:
+            eln:
+              component: StringEditQuantity
+    Splitting:
+      base_sections:
+        - 'nomad.datamodel.data.EntryData'
+      description: |
+        MBE ELN Splitting Section
+      quantities:
+        date_time:
+          type: Datetime
+          m_annotations:
+            eln:
+              component: DateTimeEditQuantity
+        grower:
+          type: User
+          m_annotations:
+            eln:
+              component: AuthorEditQuantity
+        Charge ID:
+          type: string
+          m_annotations:
+            eln:
+              component: StringEditQuantity
+        Serial Number:
+          type: int
+          m_annotations:
+            eln:
+              component: NumberEditQuantity
+        Parent ID:
+          type: string
+          m_annotations:
+            eln:
+              component: StringEditQuantity
+        Number of Children:
+          type: int
+          m_annotations:
+            eln:
+              component: NumberEditQuantity
+        Shape of Children:
+          type:
+            type_kind: Enum
+            type_data:
+              - wafer
+              - 1/4 wafer
+              - square
+              - rectangular
+              - irregular
+          description:
+          m_annotations:
+            eln:
+              component: EnumEditQuantity
+        Child Size:
+          type: np.float64
+          unit: mm
+          m_annotations:
+            eln:
+              component: NumberEditQuantity
+    Substrate Inventory:
+      base_sections:
+        - 'nomad.datamodel.data.EntryData'
+      description: |
+        MBE ELN Substrate Inventory Section
+      quantities:
+        date_time:
+          type: Datetime
+          m_annotations:
+            eln:
+              component: DateTimeEditQuantity
+        grower:
+          type: User
+          m_annotations:
+            eln:
+              component: AuthorEditQuantity
+        delivery date:
+          type: Datetime
+          m_annotations:
+            eln:
+              component: DateTimeEditQuantity
+        supplier:
+          type:
+            type_kind: Enum
+            type_data:
+              - NCT
+              - CTC
+          description:
+          m_annotations:
+            eln:
+              component: EnumEditQuantity
+        bulk crystal:
+          type: string
+          m_annotations:
+            eln:
+              component: StringEditQuantity
+        charge:
+          type: string
+          m_annotations:
+            eln:
+              component: StringEditQuantity
+        charge ID:
+          type: string
+          m_annotations:
+            eln:
+              component: StringEditQuantity
+        polishing:
+          type: string
+          m_annotations:
+            eln:
+              component: StringEditQuantity
+        epi ready:
+          type: bool
+          m_annotations:
+            eln:
+              component: BoolEditQuantity
+        material:
+          type:
+            type_kind: Enum
+            type_data:
+              - Al2O3
+              - Y0.1Zr0.902
+              - Ga2O3
+              - SrTiO3
+              - DyScO3
+              - GaN
+              - In2O3
+              - BaSnO3
+              - MgO
+              - LaInO3
+          description:
+          m_annotations:
+            eln:
+              component: EnumEditQuantity
+        crystal structure:
+          type: int
+          m_annotations:
+            eln:
+              component: NumberEditQuantity
+        orientation:
+          type: int
+          m_annotations:
+            eln:
+              component: NumberEditQuantity
+        shape:
+          type:
+            type_kind: Enum
+            type_data:
+              - wafer
+              - 1/4 wafer
+              - square
+              - rectangular
+              - irregular
+          description:
+          m_annotations:
+            eln:
+              component: EnumEditQuantity
+        size:
+          type: np.float64
+          unit: mm
+          m_annotations:
+            eln:
+              component: NumberEditQuantity
+        thickness:
+          type: np.float64
+          unit: mm
+          m_annotations:
+            eln:
+              component: NumberEditQuantity
+        in-plane direction:
+          type: int
+          m_annotations:
+            eln:
+              component: NumberEditQuantity
+        offcut angle:
+          type: np.float64
+          unit: deg
+          m_annotations:
+            eln:
+              component: NumberEditQuantity
+        offcut orientation:
+          type: int
+          m_annotations:
+            eln:
+              component: NumberEditQuantity
+        dopant(s):
+          type: string
+          m_annotations:
+            eln:
+              component: StringEditQuantity
+        dopant concentration:
+          type: np.float64
+          unit: cm**-3
+          m_annotations:
+            eln:
+              component: NumberEditQuantity
+        carrier concentration:
+          type: np.float64
+          unit: cm**-3
+          m_annotations:
+            eln:
+              component: NumberEditQuantity
+        conductivity:
+          type:
+            type_kind: Enum
+            type_data:
+              - semiinsulating
+              - n-semiconducting
+              - insulating
+          description:
+          m_annotations:
+            eln:
+              component: EnumEditQuantity
+    ELNLog:
+      base_sections:
+        - nomad.datamodel.metainfo.eln.BasicEln
+        - nomad.datamodel.data.EntryData
+        - nomad.parsing.tabular.TableData
+      quantities:
+        data_file:
+          type: str
+          m_annotations:
+            browser:
+              adaptor: RawFileAdaptor
+            eln:
+              component: FileEditQuantity
+            tabular_parser:
+              comment: '#'
+              mode: row
+              target_sub_section:
+                - MyProcessesCollection
+      sub_sections:
+        MyProcessesCollection:
+          repeats: true
+          section:
+            more:
+              label_quantity: substrate_id
+            quantities:
+              substrate_id:
+                type: str
+                shape: ['*']
+                m_annotations:
+                  eln:
+                    component: StringEditQuantity
+                  tabular:
+                    name: substrate/substrate_id
+              size:
+                type: np.float64
+                shape: ['*']
+                unit: mm
+                m_annotations:
+                  eln:
+                    component: NumberEditQuantity
+                    defaultDisplayUnit: mm
+                  tabular:
+                    name: substrate/size
+              thickness:
+                type: np.float64
+                shape: ['*']
+                unit: mm
+                m_annotations:
+                  eln:
+                    component: NumberEditQuantity
+                    defaultDisplayUnit: mm
+                  tabular:
+                    name: substrate/thickness
+    EPIClogs:
+      base_sections:
+        - nomad.datamodel.metainfo.eln.BasicEln
+        - nomad.parsing.tabular.TableData
+      m_annotations:
+        plot:
+          - label: Oxygen
+            x: date
+            y:
+              - O_Reflect_MV
+              - O_Forward_MV
+              - O_MF_MV
+              - N_MF_MV
+      quantities:
+        epi ready:
+          type: bool
+          m_annotations:
+            eln:
+              component: BoolEditQuantity
+        shape:
+          type:
+            type_kind: Enum
+            type_data:
+              - wafer
+              - 1/4 wafer
+              - square
+              - rectangular
+              - irregular
+          description:
+          m_annotations:
+            eln:
+              component: EnumEditQuantity
+        data_file:
+          type: str
+          m_annotations:
+            browser:
+              adaptor: RawFileAdaptor
+            eln:
+              component: FileEditQuantity
+            tabular_parser:
+              comment: '#'
+              mode: column
+        date:
+          type: Datetime
+          shape: [1]
+          description: FILL
+          m_annotations:
+            tabular:
+              name: In_PID_wOP/Date
+            eln:
+              component: DateTimeEditQuantity
+        In_PID_wOP:
+          type: np.float64
+          shape: ['*']
+          unit: dimensionless
+          m_annotations:
+            tabular:
+              name: In_PID_wOP/In_PID_wOP
+            plot:
+              label: Indium PID working output power (%)
+              x: date
+              y: In_PID_wOP
+        In_PID_MV:
+          type: np.float64
+          shape: ['*']
+          unit: C
+          m_annotations:
+            tabular:
+              name: In_PID_MV/In_PID_MV
+            plot:
+              label: Indium PID working output power (%)
+              x: date
+              y: In_PID_MV
+        GaHL_PID_wOP:
+          type: np.float64
+          shape: ['*']
+          unit: dimensionless
+          m_annotations:
+            tabular:
+              name: GaHL_PID_wOP/GaHL_PID_wOP
+            plot:
+              label: Indium PID working output power (%)
+              x: date
+              y: GaHL_PID_wOP
+        MIG_PG_IT:
+          type: np.float64
+          shape: ['*']
+          unit: mbar
+          m_annotations:
+            tabular:
+              name: MIG_PG_IT/MIG_PG_IT
+            plot:
+              label: Indium PID working output power (%)
+              x: date
+              y: MIG_PG_IT
+        MIG_PG_GS:
+          type: np.float64
+          shape: ['*']
+          unit: mbar
+          m_annotations:
+            tabular:
+              name: MIG_PG_GS/MIG_PG_GS
+            plot:
+              label: Indium PID working output power (%)
+              x: date
+              y: MIG_PG_GS
+        O_Reflect_MV:
+          type: np.float64
+          shape: ['*']
+          unit: dimensionless
+          m_annotations:
+            tabular:
+              name: O_Reflect_MV/O_Reflect_MV
+        GeO_PID_MV:
+          type: np.float64
+          shape: ['*']
+          unit: C
+          m_annotations:
+            tabular:
+              name: GeO_PID_MV/GeO_PID_MV
+            plot:
+              label: Indium PID working output power (%)
+              x: date
+              y: GeO_PID_MV
+        FLUX_IG_PG_MV:
+          type: np.float64
+          shape: ['*']
+          unit: mbar
+          m_annotations:
+            tabular:
+              name: FLUX_IG_PG_MV/FLUX_IG_PG_MV
+        SiO_PID_MV:
+          type: np.float64
+          shape: ['*']
+          unit: C
+          m_annotations:
+            tabular:
+              name: SiO_PID_MV/SiO_PID_MV
+        N_MF_MV:
+          type: np.float64
+          shape: ['*']
+          unit: dimensionless
+          m_annotations:
+            tabular:
+              name: N_MF_MV/N_MF_MV
+        Ga_PID_MV:
+          type: np.float64
+          shape: ['*']
+          unit: C
+          m_annotations:
+            tabular:
+              name: Ga_PID_MV/Ga_PID_MV
+        InHL_PID_wOP:
+          type: np.float64
+          shape: ['*']
+          unit: C
+          m_annotations:
+            tabular:
+              name: InHL_PID_wOP/InHL_PID_wOP
+        MIG_PG_HST:
+          type: np.float64
+          shape: ['*']
+          unit: mbar
+          m_annotations:
+            tabular:
+              name: MIG_PG_HST/MIG_PG_HST
+        GeOHL_PID_MV:
+          type: np.float64
+          shape: ['*']
+          unit: C
+          m_annotations:
+            tabular:
+              name: GeOHL_PID_MV/GeOHL_PID_MV
+        SiO_PID_wOP:
+          type: np.float64
+          shape: ['*']
+          unit: C
+          m_annotations:
+            tabular:
+              name: SiO_PID_wOP/SiO_PID_wOP
+        La_PID_wOP:
+          type: np.float64
+          shape: ['*']
+          unit: C
+          m_annotations:
+            tabular:
+              name: La_PID_wOP/La_PID_wOP
+        Sub_PG_I:
+          type: np.float64
+          shape: ['*']
+          unit: mbar
+          m_annotations:
+            tabular:
+              name: Sub_PG_I/Sub_PG_I
+        GaHL_PID_MV:
+          type: np.float64
+          shape: ['*']
+          unit: C
+          m_annotations:
+            tabular:
+              name: GaHL_PID_MV/GaHL_PID_MV
+        SnO_PID_wOP:
+          type: np.float64
+          shape: ['*']
+          unit: C
+          m_annotations:
+            tabular:
+              name: SnO_PID_wOP/SnO_PID_wOP
+        SnO_PID_MV:
+          type: np.float64
+          shape: ['*']
+          unit: C
+          m_annotations:
+            tabular:
+              name: SnO_PID_MV/SnO_PID_MV
+        GC_IG_PG_MV:
+          type: np.float64
+          shape: ['*']
+          unit: mbar
+          m_annotations:
+            tabular:
+              name: GC_IG_PG_MV/GC_IG_PG_MV
+        MIG_PG_ITP:
+          type: np.float64
+          shape: ['*']
+          unit: mbar
+          m_annotations:
+            tabular:
+              name: MIG_PG_ITP/MIG_PG_ITP
+        Sub_PG_P:
+          type: np.float64
+          shape: ['*']
+          unit: mbar
+          m_annotations:
+            tabular:
+              name: Sub_PG_P/Sub_PG_P
+        SnOHL_PID_MV:
+          type: np.float64
+          shape: ['*']
+          unit: C
+          m_annotations:
+            tabular:
+              name: SnOHL_PID_MV/SnOHL_PID_MV
+        MC_PID_wOP:
+          type: np.float64
+          shape: ['*']
+          unit: C
+          m_annotations:
+            tabular:
+              name: MC_PID_wOP/MC_PID_wOP
+        Sub_PID_wOP:
+          type: np.float64
+          shape: ['*']
+          unit: C
+          m_annotations:
+            tabular:
+              name: Sub_PID_wOP/Sub_PID_wOP
+        Sub_PID_MV:
+          type: np.float64
+          shape: ['*']
+          unit: C
+          m_annotations:
+            tabular:
+              name: Sub_PID_MV/Sub_PID_MV
+        O_Light_MV:
+          type: np.float64
+          shape: ['*']
+          unit: C
+          m_annotations:
+            tabular:
+              name: O_Light_MV/O_Light_MV
+        QMB_PID_MV:
+          type: np.float64
+          shape: ['*']
+          unit: C
+          m_annotations:
+            tabular:
+              name: QMB_PID_MV/QMB_PID_MV
+        MC_IG_PG_MV:
+          type: np.float64
+          shape: ['*']
+          unit: mbar
+          m_annotations:
+            tabular:
+              name: MC_IG_PG_MV/MC_IG_PG_MV
+        GC_IGd_PG_MV:
+          type: np.float64
+          shape: ['*']
+          unit: mbar
+          m_annotations:
+            tabular:
+              name: GC_IGd_PG_MV/GC_IGd_PG_MV
+        O_MF_MV:
+          type: np.float64
+          shape: ['*']
+          unit: dimensionless
+          m_annotations:
+            tabular:
+              name: O_MF_MV/O_MF_MV
+        MIG_PG_MV:
+          type: np.float64
+          shape: ['*']
+          unit: mbar
+          m_annotations:
+            tabular:
+              name: MIG_PG_MV/MIG_PG_MV
+        Ba_PID_MV:
+          type: np.float64
+          shape: ['*']
+          unit: C
+          m_annotations:
+            tabular:
+              name: Ba_PID_MV/Ba_PID_MV
+        Ba_PID_OP:
+          type: np.float64
+          shape: ['*']
+          unit: C
+          m_annotations:
+            tabular:
+              name: Ba_PID_OP/Ba_PID_OP
+        SnOHL_PID_OP:
+          type: np.float64
+          shape: ['*']
+          unit: C
+          m_annotations:
+            tabular:
+              name: SnOHL_PID_OP/SnOHL_PID_OP
+        MC_PID_MV:
+          type: np.float64
+          shape: ['*']
+          unit: C
+          m_annotations:
+            tabular:
+              name: MC_PID_MV/MC_PID_MV
+        Ga_PID_wOP:
+          type: np.float64
+          shape: ['*']
+          unit: C
+          m_annotations:
+            tabular:
+              name: Ga_PID_wOP/Ga_PID_wOP
+        LL_IG_PG_MV:
+          type: np.float64
+          shape: ['*']
+          unit: mbar
+          m_annotations:
+            tabular:
+              name: LL_IG_PG_MV/LL_IG_PG_MV
+        GC_Atmion_PG_MV:
+          type: np.float64
+          shape: ['*']
+          unit: mbar
+          m_annotations:
+            tabular:
+              name: GC_Atmion_PG_MV/GC_Atmion_PG_MV
+        La_PID_MV:
+          type: np.float64
+          shape: ['*']
+          unit: C
+          m_annotations:
+            tabular:
+              name: La_PID_MV/La_PID_MV
+        Pyro_PID_MV:
+          type: np.float64
+          shape: ['*']
+          unit: C
+          m_annotations:
+            tabular:
+              name: Pyro_PID_MV/Pyro_PID_MV
+        GeOHL_PID_wOP:
+          type: np.float64
+          shape: ['*']
+          unit: dimensionless
+          m_annotations:
+            tabular:
+              name: GeOHL_PID_wOP/GeOHL_PID_wOP
+        O_Forward_MV:
+          type: np.float64
+          shape: ['*']
+          unit: dimensionless
+          m_annotations:
+            tabular:
+              name: O_Forward_MV/O_Forward_MV
+        QMB_PID_wOP:
+          type: np.float64
+          shape: ['*']
+          unit: C
+          m_annotations:
+            tabular:
+              name: QMB_PID_wOP/QMB_PID_wOP
+        Sub_PG_V:
+          type: np.float64
+          shape: ['*']
+          unit: mbar
+          m_annotations:
+            tabular:
+              name: Sub_PG_V/Sub_PG_V
+        InHL_PID_MV:
+          type: np.float64
+          shape: ['*']
+          unit: C
+          m_annotations:
+            tabular:
+              name: InHL_PID_MV/InHL_PID_MV
+        GeO_PID_wOP:
+          type: np.float64
+          shape: ['*']
+          unit: C
+          m_annotations:
+            tabular:
+              name: GeO_PID_wOP/GeO_PID_wOP
+        MIG_PG_EC:
+          type: np.float64
+          shape: ['*']
+          unit: C
+          m_annotations:
+            tabular:
+              name: MIG_PG_EC/MIG_PG_EC
+        QMS_Sh:
+          type: np.float64
+          shape: ['*']
+          unit: dimensionless
+          m_annotations:
+            tabular:
+              name: Shutters/QMS_Sh
