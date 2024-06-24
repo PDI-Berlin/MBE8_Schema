@@ -17,6 +17,14 @@
 definitions:
   name: 'MBE ELN'
   sections:
+    MBE Experiment:
+      base_sections:
+        - nomad.datamodel.metainfo.basesections.Process
+        - nomad.datamodel.data.EntryData
+      sub_sections:
+        Holder:
+          repeats: True
+          section: '#/Holder'
     Holder:
       base_sections:
         - 'nomad.datamodel.data.EntryData'
@@ -34,11 +42,6 @@ definitions:
             eln:
               component: AuthorEditQuantity
         Holder ID:
-          type: string
-          m_annotations:
-            eln:
-              component: StringEditQuantity
-        substrate ID:
           type: string
           m_annotations:
             eln:
@@ -74,6 +77,10 @@ definitions:
           m_annotations:
             eln:
               component: NumberEditQuantity
+      sub_sections:
+        Substrate ID:
+          repeats: True
+          section: '#/Substrate for Growth'
     Substrate for Growth:
       base_sections:
         - 'nomad.datamodel.data.EntryData'
